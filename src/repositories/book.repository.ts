@@ -14,5 +14,10 @@ async function insertBook(book: Book): Promise<QueryResult<Book>>{
         [book.title, book.isbn, book.author, book.category]);
 }
 
+async function excludeBook(id: number): Promise<QueryResult<BookEntity>>{
+    return connection.query('DELETE FROM books WHERE "id" = $1', [id]);;
+}
 
-export {getBooks, insertBook}
+export {getBooks, insertBook, excludeBook}
+
+
