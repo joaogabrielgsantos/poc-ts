@@ -1,14 +1,14 @@
 import { bookSchema } from "../schemas/books.schema.js";
 import { StatusCodes } from "http-status-codes";
 import { NextFunction, Request, Response } from "express";
+import { Book } from "../protocols/book.js";
 
 
 
 
 function validateBook(req: Request, res: Response, next: NextFunction) {
 
-    const { title, isbn, author, category } = req.body
-    const newBook = { title, isbn, author, category }
+    const newBook = req.body as Book
 
 
     const validation = bookSchema.validate(newBook, {

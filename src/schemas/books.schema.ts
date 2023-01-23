@@ -1,23 +1,24 @@
-import joi from "joi";
+import Joi from "joi";
+import { Book } from "../protocols/book.js";
 
-const bookSchema = joi.object({
+const bookSchema = Joi.object<Book>({
     title: 
-        joi
+        Joi
             .string()
             .min(3)
             .required(),
 
     isbn: 
-        joi
+        Joi
             .string()
             .min(13)
             .required(),
     author: 
-        joi
+        Joi
             .string()
             .required(),
     category: 
-        joi
+        Joi
             .string()
             .required()
 });

@@ -1,20 +1,14 @@
 import { Request, Response } from "express";
-import { StatusCodes } from  "http-status-codes";
-import connection from "../database/database.js";
+import { StatusCodes } from "http-status-codes";
+import { Book } from "../protocols/book.js";
+import { getBooks, insertBook } from "../repositories/book.repository.js";
 
 
-async function postBook(req: Request, res: Response){
-
+async function postBook(req: Request, res: Response) {
+    const newBook = req.body as Book
     try {
-
-        const { title, isbn, author, category } = req.body;
-
-        await connection.query(
-            `INSERT INTO "books" (title, isbn, author, category) VALUES ($1, $2, $3, $4);`, 
-            [title, isbn, author, category]
-        );
-
-        return res.sendStatus(StatusCodes.CREATED);
+        const resultado = await insertBook(newBook)
+        return res.status(StatusCodes.CREATED).send(`Book inserted ${resultado.rowCount}`);
 
     } catch (error) {
         console.error(error);
@@ -22,7 +16,16 @@ async function postBook(req: Request, res: Response){
     }
 }
 
-export default postBook
+
+
+async function listBooks(req: Request, res: Response) {
+    const resultado = await getBooks();
+    return res.send(resultado.rows)
+}
+
+
+
+export { postBook, listBooks }
 
 
 
