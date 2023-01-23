@@ -1,23 +1,27 @@
 import Joi from "joi";
-import { Book } from "../protocols/book.js";
+import { BookEntity } from "../protocols/book.js";
 
-const bookSchema = Joi.object<Book>({
-    title: 
+const bookSchema = Joi.object<BookEntity>({
+    id:
+        Joi
+            .number(),
+
+    title:
         Joi
             .string()
             .min(3)
             .required(),
 
-    isbn: 
+    isbn:
         Joi
             .string()
             .min(13)
             .required(),
-    author: 
+    author:
         Joi
             .string()
             .required(),
-    category: 
+    category:
         Joi
             .string()
             .required()
